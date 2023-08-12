@@ -1,15 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import express, { Application } from "express";
-import cors from "cors";
-import "colors";
+import app from "./app";
+
 const prisma = new PrismaClient();
-
-const app: Application = express();
-
-// middleware
-app.use(express.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3003;
 

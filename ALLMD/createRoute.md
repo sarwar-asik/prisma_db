@@ -41,3 +41,40 @@
     }
 
     main();
+
+####  ** or ** create app.ts & index.ts ::::
+
+**app.ts**
+
+        import express, { Application } from "express";
+        import cors from "cors";
+        import "colors";
+
+
+        const app: Application = express();
+
+        // middleware
+        app.use(express.json());
+        app.use(cors());
+        app.use(express.urlencoded({ extended: true }));
+
+
+        export default app
+
+
+**index.ts**
+
+            import { PrismaClient } from "@prisma/client";
+            import app from "./app";
+
+            const prisma = new PrismaClient();
+
+            const port = process.env.PORT || 3003;
+
+            async function main() {
+            app.listen(port, () => {
+                console.log(`server is running on ${port}`.red.underline.bold);
+            });
+            }
+
+            main();
