@@ -39,3 +39,25 @@
 **step-6 install**
 
         npx prisma migrate dev --name init
+
+**step-7**
+
+       npm install @prisma/client
+
+**step-8** create function in index.ts ::::
+
+                import { PrismaClient } from "@prisma/client";
+
+                const prisma = new PrismaClient();
+
+                async function main(){
+                const getALlUser = await prisma.user.findMany()
+                console.log(getALlUser);
+                }
+
+                main()
+
+
+**run the func by**
+
+                npx ts-node index.ts
