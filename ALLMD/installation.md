@@ -82,4 +82,14 @@
 
         npx prisma migrate dev 
 
-        
+
+
+### create api ::::
+
+**install expresss**
+
+                        yarn add express cors
+                        npm i --save-dev @types/express
+
+
+
