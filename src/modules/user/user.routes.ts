@@ -5,6 +5,9 @@ const router = express.Router();
 router.post('/create-user',UserController.insertIntoDB);
 
 router.put('/update-profile',UserController.insertOrUpdateProfile);
+router.get('/',UserController.getUser);
+
+router.get('/:id',UserController.getSingleUser);
 
 
 // router.get("/", (req, res) => {
