@@ -1,52 +1,47 @@
-### set up prisma project :::::
 
-**documentation**
+**step-1** create model in prisma>scheme.prisma>>> ::::
 
-                https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgresql
+        generator client {
+        provider = "prisma-client-js"
+        }
 
-**step-1** ::::
-
-            npm install typescript ts-node @types/node --save-dev
-
-**step-2** ::::
-
-        npx tsc --init
-
-**step-3** ::::
-
-            npx prisma
-
-**step-4** ::::
-
-            npx prisma init
-
-**step-5** ::::
-
-         set up .env >>>
-
-         DATABASE_URL="postgresql://postgres:password@localhost:5432/hello_prisma?schema=public"
-
-**install prisma extension**
-
-**step-5** create model in prisma>scheme.prisma>>> ::::
+        datasource db {
+        provider = "postgresql"
+        url      = env("DATABASE_URL")
+        }
 
         model User {
         id    Int    @id @default(autoincrement())
-        emial String
+        email String @unique
         name  String
+        age   Int
+        role  String
         }
 
-**step-6 install**
+        model Profile {
+        id     Int    @id @default(autoincrement())
+        bio    String
+        userId Int
+        }
 
-        npx prisma migrate dev --name init
+        model Category {
+        id   Int    @id @default(autoincrement())
+        name String
+        }
 
-**step-7**
+        model Post {
+        id         Int      @id @default(autoincrement())
+        title      String
+        authorID   Int
+        categoryId Int
+        caretedAt  DateTime @default(now())
+        updatedAt  DateTime @updatedAt
+        }
 
-       npm install @prisma/client
 
-**step-8** create function in index.ts ::::
 
-          
+**step-2** create function in index.ts ::::
+
     import { PrismaClient } from "@prisma/client";
 
     const prisma = new PrismaClient();
@@ -79,5 +74,5 @@
         npx prisma generate 
 
 **update property should optional or default values**
-
+       
         npx prisma migrate dev 
