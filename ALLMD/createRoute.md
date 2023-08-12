@@ -1,21 +1,18 @@
-
 **install expresss**
 
                         yarn add express cors
                         npm i --save-dev @types/express
                         npm i --save-dev @types/cors
 
-
 **cut the index.ts to src>index.ts**
 
 #### change rootDir in tsconfig.json ::::
 
-              "rootDir": "./src", 
-
+              "rootDir": "./src",
 
 ### add start in package.json:::
-             "start": "nodemon ./src/index.ts",
 
+             "start": "nodemon ./src/index.ts",
 
 ### src>index.ts (create a server) ::::
 
@@ -42,7 +39,7 @@
 
     main();
 
-####  ** or ** create app.ts & index.ts ::::
+#### ** or ** create app.ts & index.ts ::::
 
 **app.ts**
 
@@ -61,7 +58,6 @@
 
         export default app
 
-
 **index.ts**
 
             import { PrismaClient } from "@prisma/client";
@@ -78,3 +74,81 @@
             }
 
             main();
+
+## Create api:::::
+
+            http://localhost:5000/api/v1/user/create-user/  (POST)
+
+### src>app.ts :::::
+
+        app.use('/api/v1/user',userROuter)
+
+#### create src>modules>user.router.ts::::
+
+    import express from "express";
+    import { UserController } from "./user.controller";
+    const router = express.Router();
+
+    router.post('/create-user',UserController.insertIntoDB);
+
+
+    // router.get("/", (req, res) => {
+    //   res.send({ success: true, message: "from user router" });
+    // });
+    export const userROuter = router;
+
+#### create src>modules>user.controller.ts::::
+
+        import { Request, Response } from "express";
+        import { UserService } from "./user.service";
+
+        const insertIntoDB = async (req: Request, res: Response) => {
+        try {
+            const userData = req?.body;
+            console.log(
+            "🚀 ~ file: user.controller.ts:8 ~ insertIntoDB ~ userData:",
+            userData
+            );
+
+            const result = await UserService.insertIntoDBService(userData);
+            res.send({
+            success: true,
+            message: "User created successfully",
+            data: result,
+            });
+        } catch (error) {
+            console.log(
+            "🚀 ~ file: user.controller.ts:18 ~ insertIntoDB ~ error:",
+            error
+            );
+            res.send(error);
+        }
+        };
+
+        export const UserController = { insertIntoDB };
+
+#### create src>modules>user.service.ts::::
+
+    import { PrismaClient, User } from "@prisma/client";
+
+
+    const prisma = new PrismaClient();
+
+    const insertIntoDBService = async(data:User):Promise<User>=>{
+        const result = await prisma.user.create({
+            data
+        })
+        console.log("🚀 ~ file: user.service.ts:10 ~ insertIntoDBService ~ result:", result)
+
+        return result
+
+    }
+
+    export const UserService ={
+        insertIntoDBService
+    }
+
+
+**get data with prisma studio**
+
+            npx prisma studio
