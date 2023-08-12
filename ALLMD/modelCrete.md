@@ -79,7 +79,7 @@
 
 
 
-### relation between 2 model in prisma>schema.prisma >>>
+### relation between 2 model(user & profile) in prisma>schema.prisma >>>
 
 **user model**
 
@@ -103,4 +103,43 @@
             userId Int @unique
             user   User   @relation(fields: [userId], references: [id])
             @@map("profiles")
+        }
+
+### relation between 3 model(user & profile & category) in prisma>schema.prisma >>>
+
+**post model**
+
+        model Post {
+            id         Int      @id @default(autoincrement())
+            title      String
+            authorID   Int
+            author     User     @relation(fields: [authorID], references: [id])
+            categoryId Int
+            category   Category @relation(fields: [categoryId], references: [id])
+            caretedAt  DateTime @default(now())
+            updatedAt  DateTime @updatedAt
+
+            @@map("posts")
+        }
+
+**category model**
+
+            model Category {
+            id   Int    @id @default(autoincrement())
+            name String
+            posts Post[]
+            @@map("categories")
+            }
+**user model**
+
+        model User {
+                id      Int      @id @default(autoincrement())
+                email   String   @unique
+                name    String
+                age     Int
+                role    String
+                profile Profile?
+                posts   Post[]
+
+                @@map("users")
         }

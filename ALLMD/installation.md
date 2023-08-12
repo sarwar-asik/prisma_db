@@ -81,3 +81,5 @@
 **update property should optional or default values**
 
         npx prisma migrate dev 
+
+        
