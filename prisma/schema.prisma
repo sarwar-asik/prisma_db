@@ -16,17 +16,20 @@ model User {
   name  String
   age   Int
   role  String
+  @@map("users")
 }
 
 model Profile {
   id     Int    @id @default(autoincrement())
   bio    String
   userId Int
+  @@map("profiles")
 }
 
 model Category {
   id   Int    @id @default(autoincrement())
   name String
+  @@map("categories")
 }
 
 model Post {
@@ -36,4 +39,6 @@ model Post {
   categoryId Int
   caretedAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@map("posts")
 }
