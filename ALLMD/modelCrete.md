@@ -76,3 +76,31 @@
 **update property should optional or default values**
        
         npx prisma migrate dev 
+
+
+
+### relation between 2 model in prisma>schema.prisma >>>
+
+**user model**
+
+        model User {
+            id      Int      @id @default(autoincrement())
+            email   String   @unique
+            name    String
+            age     Int
+            role    String
+            profile Profile?
+
+            @@map("users")
+        }
+
+**profile model**
+
+
+        model Profile {
+            id     Int    @id @default(autoincrement())
+            bio    String
+            userId Int @unique
+            user   User   @relation(fields: [userId], references: [id])
+            @@map("profiles")
+        }
