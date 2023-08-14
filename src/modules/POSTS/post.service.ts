@@ -1,14 +1,13 @@
 import { Post, PrismaClient } from "@prisma/client";
 
-const prisma =new PrismaClient()
+const prisma = new PrismaClient();
 
-const insertToDB = async(data:Post):Promise<Post>=>{
-    const result   = prisma.post.create({
-        data
-    })
+const insertToDB = async (data: Post): Promise<Post> => {
+  const result = prisma.post.create({
+    data,
+  });
 
-    return result
-}
+  return result;
+};
 
-
-export const PostServices = {insertToDB}
+export const PostServices = { insertToDB };

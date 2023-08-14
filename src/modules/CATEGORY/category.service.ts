@@ -8,5 +8,9 @@ const insertToDB = async (data: Category): Promise<Category> => {
   });
   return result;
 };
+const getDCategory = async () => {
+  const result = await prisma.category.findMany()
+  return result;
+};
 
-export const CategoryService = { insertToDB };
+export const CategoryService = { insertToDB ,getDCategory};

@@ -20,4 +20,15 @@ const insertIntoDb = async (req: Request, res: Response) => {
   }
 };
 
-export const CategoryController = { insertIntoDb };
+const getCategory =async (req: Request, res: Response)=>{
+  const result = await CategoryService.getDCategory()
+
+  res.send({
+    success: true,
+    message: "Category  data", 
+    data: result,
+  });
+ 
+}
+
+export const CategoryController = { insertIntoDb,getCategory };
