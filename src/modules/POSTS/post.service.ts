@@ -24,57 +24,59 @@ const getPostData = async (options: any) => {
 
   const takeData = parseInt(limit);
 
-  const result = await prisma.post.findMany({
-    skip,
-    take:takeData,
-    include: {
-      author: true,
-      category: true,
-    },
-    // orderBy:{
-    //     // caretedAt:"asc"
-    //     [sortBy]:sortOrder
-    // }
+  return await prisma.$transaction(async (tx) => {
+    const result = await tx.post.findMany({
+      skip,
+      take: takeData,
+      include: {
+        author: true,
+        category: true,
+      },
+      // orderBy:{
+      //     // caretedAt:"asc"
+      //     [sortBy]:sortOrder
+      // }
 
-    // for order and filter //
+      // for order and filter //
 
-    orderBy:
-      sortBy && sortOrder
-        ? {
-            [sortBy]: sortOrder,
-          }
-        : { caretedAt: "desc" },
+      orderBy:
+        sortBy && sortOrder
+          ? {
+              [sortBy]: sortOrder,
+            }
+          : { caretedAt: "desc" },
 
-    // for search
+      // for search
 
-    where: {
-      //   title: {
-      //     contains: searchTerm,
-      //     mode:"insensitive"   //for any capital or small letter ////
-      //   },
+      where: {
+        //   title: {
+        //     contains: searchTerm,
+        //     mode:"insensitive"   //for any capital or small letter ////
+        //   },
 
-      OR: [
-        {
-          title: {
-            contains: searchTerm,
-            mode: "insensitive", //for any capital or small letter ////
-          },
-        },
-        {
-          author: {
-            name: {
+        OR: [
+          {
+            title: {
               contains: searchTerm,
-              mode: "insensitive",
+              mode: "insensitive", //for any capital or small letter ////
             },
           },
-        },
-      ],
-    },
+          {
+            author: {
+              name: {
+                contains: searchTerm,
+                mode: "insensitive",
+              },
+            },
+          },
+        ],
+      },
+    });
+
+    const total = await tx.post.count();
+
+    return { data: result, total };
   });
-
-  const total = await prisma.post.count()
-
-  return {data:result,total}
 };
 
 const getSinglePost = async (id: number) => {
