@@ -52,8 +52,17 @@ const getUserData =async()=>{
             profile:true
         }
     })
+
+    // const result = await prisma.$queryRaw`
+    // select * from users
+    
+    // `
+  
     return result
 }
+
+
+
 const getSingleUser =async(id:number)=>{
     const result = await prisma.user.findUnique({
         // select:{

@@ -103,14 +103,23 @@ const getSinglePost = async (id: number) => {
 
 const updatePost = async (
   id: number,
-  payload: Partial<Post>
-): Promise<Post> => {
-  const result = prisma.post.update({
-    where: {
-      id,
-    },
-    data: payload,
-  });
+  payload: Partial<Post >
+): Promise<Post | number> => {
+    const result = prisma.post.update({
+      where: {
+        id,
+      },
+      data: payload,
+    });
+
+//raw postgresSQL ///
+
+//   const result = await prisma.$executeRaw`
+//     UPDATE posts
+//     SET title = ${payload.title}
+//     WHERE
+//     id = ${id}
+// `;
 
   return result;
 };
@@ -126,29 +135,28 @@ const deletePost = async (id: number): Promise<Post> => {
 };
 
 const aggregateAndGroupingPost = async () => {
+  // for aggregate ///
 
-    // for aggregate ///
+  //  const result = await prisma.post.aggregate({
+  //     _avg:{
+  //         authorId:true
+  //     },
+  //     _count:{
+  //         authorId:true,
+  //         categoryId:true,
+  //     },
+  //     _sum:{
+  //         authorId:true
+  //     }
+  //  })
 
-//  const result = await prisma.post.aggregate({
-//     _avg:{
-//         authorId:true
-//     },
-//     _count:{
-//         authorId:true,
-//         categoryId:true,
-//     },
-//     _sum:{
-//         authorId:true
-//     }
-//  })
-
-const result = await prisma.post.groupBy({
-    by:['title'],
-    _count:{
-        title:true,
-        categoryId:true
-    }
-})
+  const result = await prisma.post.groupBy({
+    by: ["title"],
+    _count: {
+      title: true,
+      categoryId: true,
+    },
+  });
 
   return result;
 };
@@ -160,5 +168,5 @@ export const PostServices = {
   updatePost,
   getPostAllData,
   deletePost,
-  aggregateAndGroupingPost
+  aggregateAndGroupingPost,
 };
