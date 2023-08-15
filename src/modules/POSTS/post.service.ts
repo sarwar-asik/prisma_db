@@ -15,23 +15,23 @@ const insertToDB = async (data: Post): Promise<Post> => {
 };
 
 const getPostAllData = async () => {
-  const result = await prisma.post.findMany()
-  const total = await prisma.post.count()
+  const result = await prisma.post.findMany();
+  const total = await prisma.post.count();
   return {
-    data:result,
-    total
-  }
-  
+    data: result,
+    total,
+  };
 };
+
 const getPostPaginationData = async (options: any) => {
   console.log(options);
   const { sortBy, sortOrder, searchTerm, page, limit } = options;
 
   // for pagination ///
 
-  const skip = parseInt(limit) * parseInt(page) - parseInt(limit);
+  const skip = parseInt(limit) * parseInt(page) - parseInt(limit) || 0;
 
-  const takeData = parseInt(limit);
+  const takeData = parseInt(limit) || 0;
 
   return await prisma.$transaction(async (tx) => {
     const result = await tx.post.findMany({
@@ -88,8 +88,6 @@ const getPostPaginationData = async (options: any) => {
   });
 };
 
-
-
 const getSinglePost = async (id: number) => {
   const result = await prisma.post.findUnique({
     where: {
@@ -103,13 +101,26 @@ const getSinglePost = async (id: number) => {
   return result;
 };
 
-const updatePost = async (id: number, payload: Partial<Post>): Promise<Post> => {
+const updatePost = async (
+  id: number,
+  payload: Partial<Post>
+): Promise<Post> => {
   const result = prisma.post.update({
     where: {
       id,
     },
     data: payload,
-    })
+  });
+
+  return result;
+};
+
+const deletePost = async (id: number): Promise<Post> => {
+  const result = prisma.post.delete({
+    where: {
+      id,
+    },
+  });
 
   return result;
 };
@@ -119,5 +130,6 @@ export const PostServices = {
   getPostPaginationData,
   getSinglePost,
   updatePost,
-  getPostAllData
+  getPostAllData,
+  deletePost,
 };

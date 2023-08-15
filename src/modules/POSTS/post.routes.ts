@@ -8,6 +8,7 @@ router.get("/", PostController.getAllPostData);
 router.get("/filter", PostController.getPostPaginationData);
 router.get("/:id", PostController.getSinglePostData);
 router.put("/:id", PostController.updatePost);
+router.delete("/:id", PostController.deletePost);
 
 export const postRouter = router;
 

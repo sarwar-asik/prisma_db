@@ -79,10 +79,27 @@ const updatePost = async (req: Request, res: Response) => {
   }
 };
 
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req?.params?.id);
+
+
+    const result = await PostServices.deletePost(id);
+    res.send({
+      success: true,
+      message: ` post id = ${id} data delete successfully`,
+      data: result,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 export const PostController = {
   insertIntoDb,
   getAllPostData,
   getSinglePostData,
   updatePost,
-  getPostPaginationData
+  getPostPaginationData,
+  deletePost
 };
