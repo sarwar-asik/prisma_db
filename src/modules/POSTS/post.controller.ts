@@ -20,20 +20,32 @@ const insertIntoDb = async (req: Request, res: Response) => {
   }
 };
 
-
-
 const getPostData = async (req: Request, res: Response) => {
-    try {
-      const result = await  PostServices.getPostData()
-      res.send({
-        success: true,
-        message: "post data get successfully",
-        data: result,
-      });
-    } catch (error) {
-      
-      res.send(error);
-    }
-  };
+  try {
+    const options = req?.query
+    const result = await PostServices.getPostData(options);
+    res.send({
+      success: true,
+      message: "post data get successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+const getSinglePostData = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req?.params?.id);
 
-export const PostController = { insertIntoDb ,getPostData};
+    const result = await PostServices.getSinglePost(id);
+    res.send({
+      success: true,
+      message: `${id} post data get successfully`,
+      data: result,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const PostController = { insertIntoDb, getPostData,getSinglePostData };
