@@ -93,3 +93,6 @@
 
 
 
+**get data with prisma studio**
+
+            npx prisma studio

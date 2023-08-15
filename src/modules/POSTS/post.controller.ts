@@ -94,6 +94,20 @@ const deletePost = async (req: Request, res: Response) => {
     res.send(error);
   }
 };
+const aggregateAndGroupPost = async (req: Request, res: Response) => {
+  try {
+    
+
+    const result = await PostServices.aggregateAndGroupingPost()
+    res.send({
+      success: true,
+      message: `aggregate post data successfully`,
+      data: result,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
 
 export const PostController = {
   insertIntoDb,
@@ -101,5 +115,6 @@ export const PostController = {
   getSinglePostData,
   updatePost,
   getPostPaginationData,
-  deletePost
+  deletePost,
+  aggregateAndGroupPost
 };
