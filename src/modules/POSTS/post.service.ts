@@ -16,8 +16,17 @@ const insertToDB = async (data: Post): Promise<Post> => {
 
 const getPostData = async (options: any) => {
   console.log(options);
-  const { sortBy, sortOrder, searchTerm } = options;
+  const { sortBy, sortOrder, searchTerm, page, limit } = options;
+
+  // for pagination ///
+
+  const skip = parseInt(limit) * parseInt(page) - parseInt(limit);
+
+  const takeData = parseInt(limit);
+
   const result = await prisma.post.findMany({
+    skip,
+    take:takeData,
     include: {
       author: true,
       category: true,
@@ -39,31 +48,33 @@ const getPostData = async (options: any) => {
     // for search
 
     where: {
-    //   title: {
-    //     contains: searchTerm,
-    //     mode:"insensitive"   //for any capital or small letter ////
-    //   },
+      //   title: {
+      //     contains: searchTerm,
+      //     mode:"insensitive"   //for any capital or small letter ////
+      //   },
 
-     OR:[
-
+      OR: [
         {
-            title: {
-                contains: searchTerm,
-                mode:"insensitive"   //for any capital or small letter ////
-              },
+          title: {
+            contains: searchTerm,
+            mode: "insensitive", //for any capital or small letter ////
+          },
         },
         {
-            author:{
-                name:{
-                    contains:searchTerm,
-                    mode:"insensitive"
-                }
-            }
-        }
-     ]
+          author: {
+            name: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        },
+      ],
     },
   });
-  return result;
+
+  const total = await prisma.post.count()
+
+  return {data:result,total}
 };
 
 const getSinglePost = async (id: number) => {

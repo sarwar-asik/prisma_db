@@ -26,7 +26,6 @@ sortBy && sortOrder?{
 
 ### search by title or author
 
-
 **system-1**
 
     const result = await prisma.post.findMany({
@@ -60,4 +59,16 @@ sortBy && sortOrder?{
         }
      ]
     },
+    })
+
+### pagination ::::
+
+    const skip = parseInt(limit) * parseInt(page) - parseInt(limit);
+
+    const takeData = parseInt(limit);
+
+    const result = await prisma.post.findMany({
+        skip,
+        take:takeData
+
     })
