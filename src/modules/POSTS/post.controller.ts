@@ -20,20 +20,35 @@ const insertIntoDb = async (req: Request, res: Response) => {
   }
 };
 
-const getPostData = async (req: Request, res: Response) => {
+const getAllPostData = async (req: Request, res: Response) => {
   try {
-    const options = req?.query
-    const result = await PostServices.getPostData(options);
+
+    const result = await PostServices.getPostAllData();
     res.send({
       success: true,
-      message: "post data get successfully",
-      total:result?.total,
-      data: result?.data
+      message: "all post data get successfully",
+      total: result?.total,
+      data: result?.data,
     });
   } catch (error) {
     res.send(error);
   }
 };
+const getPostPaginationData = async (req: Request, res: Response) => {
+  try {
+    const options = req?.query;
+    const result = await PostServices.getPostPaginationData(options);
+    res.send({
+      success: true,
+      message: "post filter data get successfully",
+      total: result?.total,
+      data: result?.data,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 const getSinglePostData = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req?.params?.id);
@@ -41,7 +56,22 @@ const getSinglePostData = async (req: Request, res: Response) => {
     const result = await PostServices.getSinglePost(id);
     res.send({
       success: true,
-      message: `${id} post data get successfully`,
+      message: ` post id = ${id} data get successfully`,
+      data: result,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+const updatePost = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req?.params?.id);
+    const data = req?.body;
+
+    const result = await PostServices.updatePost(id, data);
+    res.send({
+      success: true,
+      message: ` post id = ${id} data update successfully`,
       data: result,
     });
   } catch (error) {
@@ -49,4 +79,10 @@ const getSinglePostData = async (req: Request, res: Response) => {
   }
 };
 
-export const PostController = { insertIntoDb, getPostData,getSinglePostData };
+export const PostController = {
+  insertIntoDb,
+  getAllPostData,
+  getSinglePostData,
+  updatePost,
+  getPostPaginationData
+};

@@ -14,7 +14,16 @@ const insertToDB = async (data: Post): Promise<Post> => {
   return result;
 };
 
-const getPostData = async (options: any) => {
+const getPostAllData = async () => {
+  const result = await prisma.post.findMany()
+  const total = await prisma.post.count()
+  return {
+    data:result,
+    total
+  }
+  
+};
+const getPostPaginationData = async (options: any) => {
   console.log(options);
   const { sortBy, sortOrder, searchTerm, page, limit } = options;
 
@@ -79,6 +88,8 @@ const getPostData = async (options: any) => {
   });
 };
 
+
+
 const getSinglePost = async (id: number) => {
   const result = await prisma.post.findUnique({
     where: {
@@ -92,4 +103,21 @@ const getSinglePost = async (id: number) => {
   return result;
 };
 
-export const PostServices = { insertToDB, getPostData, getSinglePost };
+const updatePost = async (id: number, payload: Partial<Post>): Promise<Post> => {
+  const result = prisma.post.update({
+    where: {
+      id,
+    },
+    data: payload,
+    })
+
+  return result;
+};
+
+export const PostServices = {
+  insertToDB,
+  getPostPaginationData,
+  getSinglePost,
+  updatePost,
+  getPostAllData
+};
