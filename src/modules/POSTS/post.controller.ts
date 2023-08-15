@@ -20,4 +20,20 @@ const insertIntoDb = async (req: Request, res: Response) => {
   }
 };
 
-export const PostController = { insertIntoDb };
+
+
+const getPostData = async (req: Request, res: Response) => {
+    try {
+      const result = await  PostServices.getPostData()
+      res.send({
+        success: true,
+        message: "post data get successfully",
+        data: result,
+      });
+    } catch (error) {
+      
+      res.send(error);
+    }
+  };
+
+export const PostController = { insertIntoDb ,getPostData};

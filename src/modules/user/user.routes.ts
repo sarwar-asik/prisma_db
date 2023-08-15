@@ -14,3 +14,11 @@ router.get('/:id',UserController.getSingleUser);
 //   res.send({ success: true, message: "from user router" });
 // });
 export const userROuter = router;
+
+
+// {
+//     "email": "user5@gmail.com",
+//             "name": "user5",
+//             "age": 22,
+//             "role": "user"
+// }

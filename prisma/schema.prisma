@@ -42,8 +42,8 @@ model Category {
 model Post {
   id         Int      @id @default(autoincrement())
   title      String
-  authorID   Int
-  author     User     @relation(fields: [authorID], references: [id])
+  authorId   Int
+  author     User     @relation(fields: [authorId], references: [id])
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
   caretedAt  DateTime @default(now())

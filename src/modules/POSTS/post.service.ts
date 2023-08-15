@@ -5,9 +5,25 @@ const prisma = new PrismaClient();
 const insertToDB = async (data: Post): Promise<Post> => {
   const result = prisma.post.create({
     data,
+    include:{
+        author:true,
+        category:true
+    }
   });
 
   return result;
 };
 
-export const PostServices = { insertToDB };
+
+const getPostData =async()=>{
+    const result = await prisma.post.findMany({
+        
+        include:{
+            author:true,
+            category:true
+        }
+    })
+    return result
+}
+
+export const PostServices = { insertToDB,getPostData };
