@@ -1,28 +1,22 @@
 ### raw postgress code in Prisma :::
 
-
 **follow the documentation**
 
         https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access
 
-####  query data with raw PostgresSQL ($queryRaw) ::::
-
-
+#### query data with raw PostgresSQL ($queryRaw) ::::
 
     const getUserData =async()=>{
-       
+
 
         const result = await prisma.$queryRaw`
         select * from users
-        
+
         `
         return result
     }
 
-
-####  update data with raw PostgresSQL ($executeRaw) ::::
-
-
+#### update data with raw PostgresSQL ($executeRaw) ::::
 
         const updatePost = async (
         id: number,
@@ -44,4 +38,3 @@
 
             return result;
         };
-
