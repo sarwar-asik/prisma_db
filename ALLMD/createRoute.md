@@ -8,15 +8,20 @@
 
 #### change rootDir in tsconfig.json ::::
 
+```json
               "rootDir": "./src",
+```
 
 ### add start in package.json:::
 
+```json
              "start": "nodemon ./src/index.ts",
+```
 
 ### src>index.ts (create a server) ::::
 
-    import { PrismaClient } from "@prisma/client";
+```ts
+   import { PrismaClient } from "@prisma/client";
     import express, { Application } from "express";
     import cors from "cors";
     import "colors";
@@ -39,9 +44,12 @@
 
     main();
 
+```
 #### ** or ** create app.ts & index.ts ::::
 
 **app.ts**
+
+```ts
 
         import express, { Application } from "express";
         import cors from "cors";
@@ -57,9 +65,11 @@
 
 
         export default app
+```
 
 **index.ts**
 
+```ts
             import { PrismaClient } from "@prisma/client";
             import app from "./app";
 
@@ -74,18 +84,23 @@
             }
 
             main();
+```
 
 ## Create api:::::
 
-            http://localhost:5000/api/v1/user/create-user/  (POST)
+http://localhost:5000/api/v1/user/create-user/  (POST)
 
 ### src>app.ts :::::
 
+```ts
         app.use('/api/v1/user',userROuter)
+```
 
 #### create src>modules>user.router.ts::::
 
-    import express from "express";
+
+```ts
+   import express from "express";
     import { UserController } from "./user.controller";
     const router = express.Router();
 
@@ -97,7 +112,10 @@
     // });
     export const userROuter = router;
 
+```
 #### create src>modules>user.controller.ts::::
+
+```ts
 
         import { Request, Response } from "express";
         import { UserService } from "./user.service";
@@ -127,8 +145,10 @@
 
         export const UserController = { insertIntoDB };
 
+```
 #### create src>modules>user.service.ts::::
 
+```ts
     import { PrismaClient, User } from "@prisma/client";
 
 
@@ -147,6 +167,7 @@
     export const UserService ={
         insertIntoDBService
     }
+```
 
 
 **get data with prisma studio**

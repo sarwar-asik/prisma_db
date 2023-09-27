@@ -2,7 +2,7 @@
 
 **documentation**
 
-                https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgresql
+https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgresql
 
 **step-1** ::::
 
@@ -24,18 +24,22 @@
 
          set up .env >>>
 
+```env
          DATABASE_URL="postgresql://postgres:password@localhost:5432/hello_prisma?schema=public"
+```
 
 **install prisma extension**
 
 **step-5** create model in prisma>scheme.prisma>>> ::::
 
+```sql
         model User {
         id    Int    @id @default(autoincrement())
         emial String
         name  String
         }
 
+```
 **step-6 install**
 
         npx prisma migrate dev --name init
@@ -47,6 +51,7 @@
 **step-8** create function in index.ts ::::
 
           
+ ```ts
     import { PrismaClient } from "@prisma/client";
 
     const prisma = new PrismaClient();
@@ -69,6 +74,7 @@
 
     main()
 
+ ```
 
 **run the func by**
 

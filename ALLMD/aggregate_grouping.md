@@ -2,8 +2,10 @@
 
 **explore the documentation***
 
-        https://www.prisma.io/docs/concepts/components/prisma-client/aggregation-grouping-summarizing
+https://www.prisma.io/docs/concepts/components/prisma-client/aggregation-grouping-summarizing
 
+
+```ts
     const aggregateAndGroupingPost = async () => {
 
         // for aggregate ///
@@ -34,3 +36,5 @@
 
     return result;
     };
+    
+```

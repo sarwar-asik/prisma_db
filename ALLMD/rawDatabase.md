@@ -2,10 +2,11 @@
 
 **follow the documentation**
 
-        https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access
+https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access
 
 #### query data with raw PostgresSQL ($queryRaw) ::::
 
+```ts
     const getUserData =async()=>{
 
 
@@ -16,7 +17,9 @@
         return result
     }
 
+```
 #### update data with raw PostgresSQL ($executeRaw) ::::
+```ts
 
         const updatePost = async (
         id: number,
@@ -38,3 +41,5 @@
 
             return result;
         };
+
+```

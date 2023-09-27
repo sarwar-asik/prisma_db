@@ -5,6 +5,8 @@
 
     // ! filter data 
 
+```ts
+
 
     const getAllDb = catchAsync(async (req: Request, res: Response) => {
        
@@ -24,8 +26,10 @@
         });
     });
 
+```
 #### course>course.service.ts :::::
 
+ ```ts
     const getAllDb = async (
     filters: ICourseFilterRequest,
     options: IPaginationOptions
@@ -120,10 +124,12 @@
     };
 
 
+ ```
 ### modules>course.interface.ts >>>>>
 
 
 
+```ts
     export type ICourseFilterRequest = {
         searchTerm?: string | null;
         roomId?: string | null;
@@ -134,9 +140,11 @@
     };
 
 
+```
 ### modules>course.constant.ts >>>>>
 
 
+```ts
     export const CourseSearchableFields = ['dayOfWeek'];
 
     export const CourseRelationalFields = [
@@ -155,3 +163,4 @@
         roomId:'room',
         semesterRegistrationId:'semesterRegistration'
     }
+```

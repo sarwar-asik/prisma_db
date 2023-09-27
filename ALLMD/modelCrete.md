@@ -1,5 +1,7 @@
 
 **step-1** create model in prisma>scheme.prisma>>> ::::
+```sql
+
 
         generator client {
         provider = "prisma-client-js"
@@ -39,8 +41,11 @@
         }
 
 
+```
 
 **step-2** create function in index.ts ::::
+
+```sql
 
     import { PrismaClient } from "@prisma/client";
 
@@ -63,6 +68,7 @@
     }
 
     main()
+```
 
 
 **run the func by**
@@ -82,6 +88,7 @@
 ### relation between 2 model(user & profile) in prisma>schema.prisma >>>
 
 **user model**
+```sql
 
         model User {
             id      Int      @id @default(autoincrement())
@@ -94,8 +101,11 @@
             @@map("users")
         }
 
+
+```
 **profile model**
 
+```sql
 
         model Profile {
             id     Int    @id @default(autoincrement())
@@ -104,11 +114,14 @@
             user   User   @relation(fields: [userId], references: [id])
             @@map("profiles")
         }
+```
 
 ### relation between 3 model(user & profile & category) in prisma>schema.prisma >>>
 
 **post model**
 
+ ```sql
+ 
         model Post {
             id         Int      @id @default(autoincrement())
             title      String
@@ -122,16 +135,20 @@
             @@map("posts")
         }
 
+ ```
 **category model**
 
+```sql
             model Category {
             id   Int    @id @default(autoincrement())
             name String
             posts Post[]
             @@map("categories")
             }
+```
 **user model**
 
+```sql
         model User {
                 id      Int      @id @default(autoincrement())
                 email   String   @unique
@@ -143,3 +160,4 @@
 
                 @@map("users")
         }
+```

@@ -2,15 +2,18 @@
 
 #### include the relation data :::
 
-    const result = await prisma.post.findMany({
-        include: {
-        author: true,
-        category: true,
-        }
-    })
+```ts
+const result = await prisma.post.findMany({
+  include: {
+    author: true,
+    category: true,
+  },
+});
+```
 
 #### sort and order in data
 
+```ts
     const result = await prisma.post.findMany({
         orderBy:{
                 // caretedAt:"asc"
@@ -24,10 +27,13 @@ sortBy && sortOrder?{
 [sortBy]: sortOrder,
 }:{ caretedAt: "desc" }
 
+```
+
 ### search by title or author
 
 **system-1**
 
+```ts
     const result = await prisma.post.findMany({
           where:{
               title: {
@@ -36,8 +42,11 @@ sortBy && sortOrder?{
              }
           }
         })
+```
 
 **system-2 for search by multiple property**
+
+```ts
 
     const result = await prisma.post.findMany({
          where: {
@@ -61,8 +70,10 @@ sortBy && sortOrder?{
     },
     })
 
+```
 ### pagination ::::
 
+```ts
     const skip = parseInt(limit) * parseInt(page) - parseInt(limit);
 
     const takeData = parseInt(limit);
@@ -72,17 +83,20 @@ sortBy && sortOrder?{
         take:takeData
 
     })
-
+```
 
 ### transaction role back with prisma ::::
 
+```ts
     const getPostData = async (options: any) => {
 
     return await prisma.$transaction(async(tx)=>{
         ////// return variable is here ::::
         const result = await tx.post.findMany({})   ////first session
-        const total = await tx.post.count();    //// second session 
+        const total = await tx.post.count();    //// second session
 
          return { data: result, total };
      })
     }
+
+```

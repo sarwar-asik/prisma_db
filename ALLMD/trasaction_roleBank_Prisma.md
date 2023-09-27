@@ -1,5 +1,6 @@
 ### transaction role back with prisma ::::
 
+```ts
     const getPostData = async (options: any) => {
 
     return await prisma.$transaction(async(tx)=>{
@@ -10,3 +11,4 @@
          return { data: result, total };
      })
     }
+```
